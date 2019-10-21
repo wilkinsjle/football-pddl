@@ -1,31 +1,66 @@
 ;;;; Football - A realistic example
-(define (domain g-football)
+(define (domain gfootball)
 
 (:requirements :typing)
 
-(:types ball - props
-        attacking defending - location
+(:types corner freekick normal_play goalkick penalty throw_in kickoff - game_mode
         player opponent none - actor
-        props actor - object
-        true false - boolean)
+        attacking defending centre - location
+        goal_for goal_against goal_none - goal_score)
 
-(:predicates (posession-ball ?a - actor)
-             (in-location ?p - props)
-             (goal-scored ?b - boolean))
+(:predicates (mode ?s - game_mode)
+             (possession ?a - actor)
+             (balllocation ?l - location)
+             (goalscored ?g - goal_score)
+)
 
 (:action pass-to-team
   :parameters (?a - actor)
-  :precondition (possession-ball ?a)
-  :effect (posession-ball ?a))
+  :precondition (possession ?a)
+  :effect (possession ?a))
 
-(:action shoot
-  :parameters (?who - actor ?where - location)
-  :precondition (and (possession-ball ?a)
-                     ())
-  :effect (and (possession-ball none) (goal-scored true)
-  ))
+(:action dribble_forward_from_defending_half
+  :parameters (?a - actor)
+  :precondition (and (possession ?a)
+                (balllocation defending))
+  :effect (and (possession ?a)
+          (balllocation centre)))
 
-(:action reset-player
-  :parameters )
+(:action dribble_forward_from_centre
+  :parameters (?a - actor)
+  :precondition (and (possession ?a)
+                (balllocation centre))
+  :effect (and (possession ?a)
+          (balllocation attacking)))
 
-(:action intercept)
+(:action tackle
+    :parameters (?tackler - actor, ?possessor - actor)
+    :precondition (possession ?possessor)
+    :effect (and (possession ?tackler)
+            (not (possession ?possessor))
+            ))
+
+(:action shoot-player
+  :parameters (?a - actor ?l - location)
+  :precondition (and (possession ?a)
+                     (balllocation attacking))
+  :effect (and (not (possession ?a))
+          (possession none)
+          (goalscored goal_for)))
+
+(:action reset-play
+  :precondition (and (possession none)
+                (goalscored goal_for))
+  :effect (and (possession player)
+          (mode kickoff))
+  )
+
+(:action kickoff
+  :parameters (?a - actor)
+  :precondition (and (possession ?a)
+                (mode kickoff))
+  :effect (and (possession ?a)
+          (possession player)
+          (mode normal_play)
+          (balllocation centre)))
+  )
