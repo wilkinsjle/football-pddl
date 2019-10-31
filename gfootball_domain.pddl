@@ -5,7 +5,7 @@
 (define (domain GFOOTBALL)
   (:requirements :strips :typing)
   (:types ball team boolean - object
-          quadrant goals - location
+          quadrant goals corner centre - location
           )
   (:predicates (at ?y - location)
 	       (possession ?y - team)
@@ -34,4 +34,13 @@
       :effect
         (and (not (possession ?p_old)) (possession ?p_new))
   	 )
+
+  (:action kickoff
+      :parameters (?from - centre ?to - quadrant ?possession - team)
+      :precondition (and (at ?from) (possession ?possession) (adjacent ?from ?to))
+      :effect
+        (and (not (at ?from)) (at ?to))
+ 	 )
+
+
 )
