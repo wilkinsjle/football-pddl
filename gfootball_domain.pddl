@@ -4,14 +4,13 @@
 
 (define (domain GFOOTBALL)
   (:requirements :strips :typing)
-  (:types ball team boolean - object
-          quadrant goals corner centre - location
+  (:types team boolean - object
+          quadrant goals corner centre outs - location
           )
   (:predicates (at ?y - location)
 	       (possession ?y - team)
-	       (goal_score ?x - boolean ?y - team)
 	       (adjacent ?x - location ?y - location)
-         (goal_pair ?g - goals ?t - team)
+           (goal_pair ?g - goals ?t - team)
 	       )
 
   (:action move-ball
@@ -40,7 +39,21 @@
       :precondition (and (at ?from) (possession ?possession) (adjacent ?from ?to))
       :effect
         (and (not (at ?from)) (at ?to))
- 	 )
+ 	    )
 
+  (:action corner-kick
+      :parameters (?from - corner ?to - quadrant ?possession - team)
+      :precondition (and (at ?from) (possession ?possession) (adjacent ?from ?to))
+      :effect
+        (and (not (at ?from)) (at ?to))
+      )
+
+  ;TODO, out of bounds, throw in, intercept.
+
+  ;need to think about whose perspective the actions are being done from? should be in the perspective of the trainer agent!
+
+  ;Human will make actions according to google football, trainer agent will have to make moves/plans according to this.
+
+  ;should be left player right player agnostic.
 
 )

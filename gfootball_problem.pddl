@@ -2,24 +2,36 @@
   (:domain GFOOTBALL)
   (:objects
     q1 q2 q3 q4 - quadrant
-    g1 g2 - goals
-    c1 c2 c3 c4 - corner
+    goal_for goal_against - goals
+    corner_rear_left corner_rear_right corner_front_left corner_front_right - corner
+    out_rear out_forward out_q1_left out_q1_right out_q2_left out_q2_right out_q3_left out_q3_right out_q4_left out_q4_right - outs
     centre - centre
-    for against - team
-    true false - boolean)
-  (:INIT (at centre)
+    for against - team)
+  (:init (at corner_front_right)
          (possession for)
-         (goal_score false for)
-         (goal_score false against)
          (adjacent q1 q2)
          (adjacent q2 q3)
          (adjacent q3 q4)
-         (adjacent q1 g1)
-         (adjacent q4 g2)
+         (adjacent q1 goal_against)
+         (adjacent q4 goal_for)
          (adjacent centre q2)
          (adjacent centre q3)
-         (goal_pair g1 against)
-         (goal_pair g2 for)
+         (adjacent out_rear q1)
+         (adjacent out_forward q4)
+         (adjacent out_q1_left q1)
+         (adjacent out_q1_right q1)
+         (adjacent out_q2_left q2)
+         (adjacent out_q2_right q2)
+         (adjacent out_q3_left q3)
+         (adjacent out_q3_right q3)
+         (adjacent out_q4_left q4)
+         (adjacent out_q4_right q4)
+         (adjacent corner_front_left q4)
+         (adjacent corner_front_right q4)
+         (adjacent corner_rear_left q1)
+         (adjacent corner_rear_right q1)
+         (goal_pair goal_against against)
+         (goal_pair goal_for for)
          )
-  (:goal (AND (at g2)))
+  (:goal (AND (at goal_for)))
 )
