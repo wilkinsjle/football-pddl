@@ -5,4 +5,4 @@ jobs:
       script: auto/validate.sh
 
     - stage: solve
-      script: autos/solve.sh
+      script: auto/solve.sh
