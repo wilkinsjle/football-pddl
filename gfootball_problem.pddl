@@ -7,7 +7,7 @@
     out_rear out_forward out_q1_left out_q1_right out_q2_left out_q2_right out_q3_left out_q3_right out_q4_left out_q4_right - outs
     centre - centre
     for against - team)
-  (:init (at corner_front_right)
+  (:init (at out_q1_right)
          (possession for)
          (adjacent q1 q2)
          (adjacent q2 q3)
