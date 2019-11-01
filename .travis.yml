@@ -1,1 +1,5 @@
+
+
 script: build/deploy.sh
+script: build/solve.sh
+script: build/validate.sh
