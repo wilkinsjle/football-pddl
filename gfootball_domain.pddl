@@ -63,7 +63,7 @@
     )
 
   (:action intercept
-      :parameters (?p_old - team ?p_new - team)
+      :parametes (?p_old - team ?p_new - team)
       :precondition (and (possession ?p_old))
       :effect
         (and (not (possession ?p_old)) (possession ?p_new))
