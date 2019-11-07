@@ -3,6 +3,3 @@ jobs:
 
     - stage: validate
       script: auto/validate.sh
-
-    - stage: solve
-      script: auto/solve.sh
